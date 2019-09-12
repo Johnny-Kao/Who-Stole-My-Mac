@@ -102,7 +102,7 @@ def zip_file(execute_time):
 
 if __name__ == '__main__':
     if get_ssid() not in safe_wifi_list: ### 判断是否使用安全WIFI
-        if exe_time[4] % unsafe_min_time != 0: ### 分钟被15整除（00，15，30，45，60）时候，执行：LOG/拍照/截屏/发送记录
+        if exe_time[4] % unsafe_min_time == 0: ### 分钟被15整除（00，15，30，45，60）时候，执行：LOG/拍照/截屏/发送记录
             t3 = "===== Wifi List =====\n" + scan_wifi()
             t1 = "SSID: " + str(get_ssid()) + "\n"
             t2 = "GPS: " + str(get_gps()) + "\n"
@@ -118,7 +118,7 @@ if __name__ == '__main__':
             send_mail("TO_YOUR_ADD", "【GPS】" + str(log_name[0:-4:]) , tmp_text, "FROM_YOUR_ADDRESS", 'FILE_PATH', str(log_name[0:-4:]) + ".zip") ### Send Email with attachment
 
     else:
-        if exe_time[4] % safe_min_time != 0: ### 分钟被60整除（00，60）时候，执行：LOG
+        if exe_time[4] % safe_min_time == 0: ### 分钟被60整除（00，60）时候，执行：LOG
             t3 = "===== Wifi List =====\n" + scan_wifi()
             t1 = "SSID: " + str(get_ssid()) + "\n"
             t2 = "GPS: " + str(get_gps()) + "\n"
@@ -126,7 +126,7 @@ if __name__ == '__main__':
             cmd = "echo " + "\"" +tmp_text + "\"" + " >> " + log_path + log_name 
             cmd_exe(cmd)
 
-            if (exe_time[3] + 8) % safe_hr_time != 0: ### 消失被2整除（0，2，4，6，8，10，12，14，16，18，20，22，24）时候，执行：发送LOG
+            if (exe_time[3] + 8) % safe_hr_time == 0: ### 消失被2整除（0，2，4，6，8，10，12，14，16，18，20，22，24）时候，执行：发送LOG
                 
                 send_mail("TO_YOUR_ADD", "【GPS】" + str(log_name[0:-4:]) , tmp_text, "FROM_YOUR_ADDRESS") ### Send Email with attachment
 
